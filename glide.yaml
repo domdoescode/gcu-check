@@ -1,0 +1,9 @@
+package: github.com/domudall/gcu-check
+import:
+- package: google.golang.org/api
+  subpackages:
+  - compute/v1
+- package: cloud.google.com/go
+  version: ^0.10.0
+  subpackages:
+  - compute/metadata
