@@ -7,3 +7,5 @@ import:
   version: ^0.10.0
   subpackages:
   - compute/metadata
+- package: github.com/nlopes/slack
+  version: ^0.1.0

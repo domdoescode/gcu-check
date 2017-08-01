@@ -1,14 +1,16 @@
-hash: 45bf0f87c9ef0366331610d0ce54d4878faa33fd10f217a0bdf30b642b7cfa98
-updated: 2017-07-31T14:10:18.243394015+01:00
+hash: 265365b980eb74959920832091e3cd5bb89b96d374a8a342caf1bf2512f927b0
+updated: 2017-08-01T09:07:07.878320296+01:00
 imports:
 - name: cloud.google.com/go
-  version: a5913b3f7deecba45e98ff33cefbac4fd204ddd7
+  version: 44bcd0b2078ba5e7fedbeb36808d1ed893534750
   subpackages:
   - compute/metadata
 - name: github.com/golang/protobuf
   version: c9c7427a2a70d2eb3bafa0ab2dc163e45f143317
   subpackages:
   - proto
+- name: github.com/nlopes/slack
+  version: c86337c0ef2486a15edd804355d9c73d2f2caed1
 - name: golang.org/x/net
   version: a6577fac2d73be281a500b310739095313165611
   subpackages:

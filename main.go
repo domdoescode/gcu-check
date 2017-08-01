@@ -3,10 +3,13 @@ package main
 import (
 	"context"
 	"errors"
+	"fmt"
 	"log"
+	"os"
 	"strconv"
 	"strings"
 
+	"github.com/nlopes/slack"
 	"golang.org/x/oauth2/google"
 	"google.golang.org/api/compute/v1"
 )
@@ -18,6 +21,13 @@ type Instance struct {
 
 func main() {
 	ctx := context.Background()
+
+	slackToken := os.Getenv("slack_token")
+	if slackToken == "" {
+		log.Fatal("slack token required")
+	}
+
+	slackClient := slack.New(slackToken)
 
 	client, err := google.DefaultClient(ctx, compute.CloudPlatformScope)
 	if err != nil {
@@ -148,8 +158,17 @@ func main() {
 				}
 
 				if len(commitments) > 0 {
-					log.Println(project, region.Name, len(commitments))
-					log.Println(commitments)
+					commitmentMessage := ""
+					for _, commitment := range commitments {
+						commitmentMessage = fmt.Sprintf("%s\nCPUs: %d\nMemory MBs: %d\n", commitmentMessage, commitment.GuestCpus, commitment.MemoryMb)
+					}
+
+					message := fmt.Sprintf("GCP project `%s` is underutilising %d commitments in `%s`:\n%s", project, len(commitments), region.Name, commitmentMessage)
+
+					_, _, err := slackClient.PostMessage("#test", message, slack.NewPostMessageParameters())
+					if err != nil {
+						log.Fatal(err)
+					}
 				}
 			}
 
